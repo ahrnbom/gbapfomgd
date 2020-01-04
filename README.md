@@ -1,4 +1,4 @@
-# gbapfomgd
+# Game Boy Assembly Programming for the Modern Game Developer
 Source code for the book *Game Boy Assembly Programming for the Modern Game Developer*
 
 You can [download the pdf version here](https://teamlampoil.se/book/gbasmdev.pdf). This GitHub page serves mainly these purposes:
