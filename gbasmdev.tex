@@ -25,7 +25,7 @@
   morestring=[b]" 
 }
 
-\lstset{language=gbasm,basicstyle=\footnotesize\ttfamily,commentstyle=\color{olive}}
+\lstset{language=gbasm,basicstyle=\footnotesize\ttfamily,commentstyle=\color{purple}}
 
 
 \lstnewenvironment{code}{}{}
@@ -258,7 +258,7 @@ before, then after a |rlc b| it will hold |%10010101|,
 but if we ran |rrc b| instead, it would hold |%01100101|. 
 Note that special, faster commands exist for rotating the A register: |rlca| and |rrca|. These work exactly the same, except they only work on the A register, and execute twice as fast, and take up half the ROM space (see Chapter~\ref{optimize}). 
 
-Shifts are similar to rotations, but do not "wrap around" and instead just pad with zeroes. The commonly used commands are |sla| for shifting left, and |srl| for shifting right. For example, if B holds |%11000011|
+Shifts are similar to rotations, but do not "wrap around" and instead just pad with zeros. The commonly used commands are |sla| for shifting left, and |srl| for shifting right. For example, if B holds |%11000011|
 before, then running |sla b| would result in |%10000110|
 while |srl b| would result in |%01100001|. 
 Note that the shifting operations (sometimes called bit-shifts) are equivalent to multiplying/dividing numbers by two (rounding down, in the case of division). 
@@ -336,7 +336,7 @@ End:
 
 Will result in A holding the number 8, because the middle is skipped. If the line |jr End| was removed, then A would hold 10, as code execution simply moves from one label to the next unless you tell it otherwise. The labels are simply names given to the next line in code.
 
-The difference between |jp| and |jr| is that the later is a relative jump, meaning that you cannot jump further than 127 positions away (since how far you jump is internally stored as an 8-bit signed integer). From an optimization standpoint, |jr| is preferred whenever possible.
+The difference between |jp| and |jr| is that the latter is a relative jump, meaning that you cannot jump further than 127 positions away (since how far you jump is internally stored as an 8-bit signed integer). From an optimization standpoint, |jr| is preferred whenever possible.
 
 All of the operations |call|, |ret|, |jp| and |jr| support conditional arguments. This allows something equivalent to simple "if-statements". The syntax is as follows (in the case of |jp|):
 
@@ -393,7 +393,7 @@ Another thing to note is that if we remove the line |ld b, 11| then we have made
 
 \section{Optimization}
 \label{optimize}
-This section will not fully explore all aspects of Game Boy code optimization, which is a complicated topic, but instead give a basic understanding of what aspects code can be optimized in, and how it differs from modern programming. On the Game Boy, the primary bottleneck is rarely CPU execution time or RAM usage. Instead, a common issue is that code takes up too much space on the ROM. All ASM code is divided in sections, and these are stored in divisions of the ROM called banks. Since each bank has a finite size, there's also a limit to how large the sections can be. If sections get too big, they might need to be split up into smaller sections and/or be placed in different banks. It is not quite trivial to call or jump to code from one bank inside code in another bank (how to do this will be covered in Chapter~\ref{rombanks}) so keeping the code small in size saves some work. In addition, the hardware cartridges that one could write the game onto also has a finite size, further motivating keeping the code as small as possible. This is in strong contrast to modern game development, where the final size of the resulting binary as a result of changes in the code itself (as opposed to graphical and audio resources) is rarely a concern.
+This section will not fully explore all aspects of Game Boy code optimization, which is a complicated topic, but instead give a basic understanding of what aspects code can be optimized in, and how it differs from modern programming. On the Game Boy, the primary bottleneck is rarely CPU execution time or RAM usage. Instead, a common issue is that code takes up too much space on the ROM. All ASM code is divided into sections, and these are stored in divisions of the ROM called banks. Since each bank has a finite size, there's also a limit to how large the sections can be. If sections get too big, they might need to be split up into smaller sections and/or be placed in different banks. It is not quite trivial to call or jump to code from one bank inside code in another bank (how to do this will be covered in Chapter~\ref{rombanks}) so keeping the code small in size saves some work. In addition, the hardware cartridges that one could write the game onto also has a finite size, further motivating keeping the code as small as possible. This is in strong contrast to modern game development, where the final size of the resulting binary as a result of changes in the code itself (as opposed to graphical and audio resources) is rarely a concern.
 
 Often, code that takes up less space also executes quickly. One example is the |jr| operation which is both more compact and executes faster than |jp|. More examples will be seen in the next chapter.
 
@@ -582,6 +582,8 @@ If you find yourself in a situation where an emulator complains that you are exe
 \label{gbgames}
 The previous chapter focused on the Game Boy CPU and how to control it. To make a game, you need to control other pieces of hardware as well, that make graphics, audio and interpret user input. That will be the subject of this chapter, as well as going through some practical details of how to work with the RGBDS compiler. By the end of it, you should be able to compile a Game Boy ROM that can be loaded into an emulator or real hardware, and start making an actual game.
 
+A good Game Boy emulator for game development is BGB, which is available here: \url{http://bgb.bircd.org/}. It has good features for debugging, and accurately emulates most of the Game Boy's quirks. 
+
 \section{About RGBDS}
 \label{rgbds}
 RGBDS is a Game Boy development system, and probably the compiler most commonly used today for making Game Boy games. It contains an assembler (which converts assembly code to binary), a linker (which converts one or more binaries into a Game Boy ROM file) as well as a "fixer" which fixes some common mistakes in the ROM file's header (like the checksum). You can find RGBDS and up-to-date install instructions for several operating systems are available here: \url{https://github.com/rednex/rgbds}
@@ -602,7 +604,7 @@ An easy example is the memory address |$FF47|, which controls the palette of bac
 BGPAL equ $FF47
 \end{code}
 
-Now, we can use the symbol |BGPAL| to refer to this memory address, whenever we want to change the background palette. The background tile palette basically allows us to swap the four colours that the Game Boy displays, allowing some neat effects like fading the screen to black or white "smoothly" by changing the colours multiple times, each time making the screen either darker och brighter. By writing a single 8-bit number to this address, we specify all four colours at once, each being specified by two bits. The default palette is |%11100100|, which means that the colours that is usually the darkest (the leftmost two bits) should actually be the darkest (|%11|), while the dark-ish colour (the 3rd and 4th bits, from the left) should be dark-ish (|%10|) and so on, with |%00| being the brightest colour. For example, doing 
+Now, we can use the symbol |BGPAL| to refer to this memory address, whenever we want to change the background palette. The background tile palette basically allows us to swap the four colours that the Game Boy displays, allowing some neat effects like fading the screen to black or white "smoothly" by changing the colours multiple times, each time making the screen either darker or brighter. By writing a single 8-bit number to this address, we specify all four colours at once, each being specified by two bits. The default palette is |%11100100|, which means that the colours that is usually the darkest (the leftmost two bits) should actually be the darkest (|%11|), while the dark-ish colour (the 3rd and 4th bits, from the left) should be dark-ish (|%10|) and so on, with |%00| being the brightest colour. For example, doing 
 
 \begin{code}
 ld a, \%00011011
@@ -982,7 +984,7 @@ In principle, rendering text and numbers is no different from rendering any othe
 
 By far the most common way to render text and numbers on the Game Boy is to let each character be a single tile ($8\times8$ pixels), and the rest of this chapter will assume this. This is easy to implement and gives a text that's reasonably sized for most purposes. One can draw such a font as an image, with the letters, numbers and characters one wants and then load it into VRAM. Make sure that the numbers are ordered as 0123456789 (and not for example 1234567890). Make sure to take note of the order of all your characters and which tile number the ‘0’ character appears at, as this is important for the special case of writing numbers (it might be easier to simply load the font into VRAM and check in an emulator like BGB to easily see which tile numbers the characters end up at, see Chapter~\ref{debug}).
 
-When writing numbers, it's important to understand the difference between decimal and hexadecimal numbers. If you store some numerical value in your game that should be presented in text, like for example the player's score, it might be tempting to store it like you would any other value, as a hexadecimal numbers (for example, the number 13 would be stored as |$0D|, or |%00001101|)
+When writing numbers, it's important to understand the difference between decimal and hexadecimal numbers. If you store some numerical value in your game that should be presented in text, like for example the player's score, it might be tempting to store it like you would any other value, as a hexadecimal number (for example, the number 13 would be stored as |$0D|, or |%00001101|)
  but the in order to present this on screen, in the decimal format that humans expect, the number would need to be converted, which is non-trivial on the Game Boy. Therefore, the common solution is to simply store the number is decimal form to begin with. That means that, for example, the number 13 should be stored as |$13| (which really means 19, but for the purpose of displaying it on screen, that doesn't matter). That way, each 8-bit number contains two decimal numbers, and to display them, we can divide the 8-bit number into two 4-bit numbers and for each add them to the tile number of the 0 character, to find which tile number we should draw. The GingerBread function |RenderTwoDecimalNumbers| does this. The GingerBread function |RenderFourDecimalNumbers| works similarly but for 16-bit numbers, which give decimal numbers with four digits.
 
 One thing we need to be aware of when working with decimal numbers like this is that normal numerical operations no longer work as expected. If you store the decimal number 9 as |$09|, and then increase it with an add command, like |add 2|, then it will become |$0B| which is not a valid decimal number. The CPU command |daa| fixes this, turning |$0B| into |$11| in this case (working only on the A register). The |daa| command only works as expected if used immediately after the commands |add|, |adc|, |sub| or |sbc|.
@@ -1453,6 +1455,7 @@ Hopefully, this book has given the reader a broad look at the topic of making Ga
 \chapter{Version history}
 \begin{itemize}
 \item Version 1.0: Initial release.
+\item Version 1.1: Fixed some typos and minor mistakes, as pointed out by Luc (|u/loociano|). Thanks!
 \end{itemize}
 
 \end{document}
