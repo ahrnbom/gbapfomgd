@@ -376,10 +376,11 @@ mult_by_eleven:
   push bc ; lets us use B register
   ; without messing up existing data, 
   ; as it is restored before we return 
+  ld c, a
   
-  ld b, 11 ; the number of times we loop 
+  ld b, 10 ; the number of times we loop 
 .loop:
-  add a ; add A onto itself 
+  add c ; add the original value (in C) onto A
   dec b ; decrease loop counter 
   jr nz, .loop ; if didn't reach zero, go back
   ; If we got here, the loop is finished 
@@ -507,10 +508,10 @@ A final note on macros: A special symbol |\@| can be used, for when labels are u
 
 \begin{code}
 MultiplyNumbers: MACRO
-    ld a, \1
-    ld b, \2
+    ld bc, (\2) << 8 | (\1)
+    xor a
 .loop\@:
-    add a
+    add c
     dec b
     jr nz, .loop\@
 \end{code}
