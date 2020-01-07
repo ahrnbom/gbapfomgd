@@ -373,15 +373,20 @@ For example, let's say we want to have a function that multiples a number by 11.
 mult_by_eleven:
   ; Input and output on A 
   
-  push bc ; lets us use B register
+  push bc ; lets us use B and C registers
   ; without messing up existing data, 
   ; as it is restored before we return 
   
-  ld b, 11 ; the number of times we loop 
+  ld b, 10 ; the number of times we loop
+  ; Since input is already on A, we only 
+  ; need to add it 10 times 
+  ld c, a ; store the input in C
+  
 .loop:
-  add a ; add A onto itself 
+  add c ; add input onto A 
   dec b ; decrease loop counter 
   jr nz, .loop ; if didn't reach zero, go back
+  
   ; If we got here, the loop is finished 
   pop bc ; restore whatever were on BC before 
   ret 
@@ -389,7 +394,7 @@ mult_by_eleven:
   
 Notice how the label |.loop| starts with a dot. This indicates that the label is local, in the sense that it is only valid until the next line where a new global label appears (a label without a dot at the start). This allows every function to have its own sublabel called |loop| so that you don't have to come up with unique names for every time you want to make a loop, for example.
 
-Another thing to note is that if we remove the line |ld b, 11| then we have made a function for multiplying arbitrary numbers, with input on A and B. Such a function could actually be useful, although it should be noted that the implementation isn't always efficient (see Chapter~\ref{optimize}).
+Another thing to note is that if we remove the line |ld b, 10| then we have made a function for multiplying arbitrary numbers, with input on A and B. Such a function could actually be useful, although it should be noted that the implementation isn't always efficient (see Chapter~\ref{optimize}).
 
 \section{Optimization}
 \label{optimize}
@@ -489,7 +494,7 @@ ENDM
 When this is written into the code, no actual code will be placed there by the compiler. It does however let you write, anywhere after the macro definition, something like
 
 \begin{code}
-AddTwoNumbers 5, 7
+AddTwoNumbers 5,7
 \end{code}
 
 which would then compile to 
@@ -503,16 +508,25 @@ This can be extremely useful, for when you do want to repeat code across multipl
 
 Some caution should be taken when using macros; they might look like they provide a more "modern" programming style, as macros allow for example input arguments, but it is important to understand what the macros actually do, as it can be bad from an optimization standpoint, in some cases. Every time a macro is called, it generates new code, which takes up space in the ROM. If a macro is called many times with the same arguments, it is probably better to create a run-time function instead, as that would only exist once in the code, saving space.
 
-A final note on macros: A special symbol |\@| can be used, for when labels are used inside a macro. One example would be if one were to write a macro which contains a run-time loop, like so:
+A special symbol |\@| can be used, for when labels are used inside a macro. One example would be if one were to write a macro which contains a run-time loop, like so:
 
 \begin{code}
+; Multiply two numbers X and Y
+; By adding X onto X, Y-1 times
 MultiplyNumbers: MACRO
-    ld a, \1
-    ld b, \2
+	push bc
+
+    ld a, \1 ; Store X in A 
+    ld b, (\2-1) ; Store Y-1 in B
+    ld c, a 
+    
 .loop\@:
-    add a
+    add c ; Add X
     dec b
     jr nz, .loop\@
+    
+    pop bc 
+ENDM    
 \end{code}
 
 Here, the |\@| will generate unique label names every time the macro is used; if we only called the local label |.loop| there might be a conflict, for example if the macro is used twice in a row like so:
