@@ -607,14 +607,14 @@ BGPAL equ $FF47
 Now, we can use the symbol |BGPAL| to refer to this memory address, whenever we want to change the background palette. The background tile palette basically allows us to swap the four colours that the Game Boy displays, allowing some neat effects like fading the screen to black or white "smoothly" by changing the colours multiple times, each time making the screen either darker or brighter. By writing a single 8-bit number to this address, we specify all four colours at once, each being specified by two bits. The default palette is |%11100100|, which means that the colours that is usually the darkest (the leftmost two bits) should actually be the darkest (|%11|), while the dark-ish colour (the 3rd and 4th bits, from the left) should be dark-ish (|%10|) and so on, with |%00| being the brightest colour. For example, doing 
 
 \begin{code}
-ld a, \%00011011
+ld a, %00011011
 ld [BGPAL], a
 \end{code}
 
 will invert the colours on the background tiles, so that parts that are usually bright are now dark and vice versa, while 
 
 \begin{code}
-ld a, \%11110000
+ld a, %11110000
 ld [BGPAL], a 
 \end{code}
 
@@ -904,8 +904,8 @@ SOUND_CH3_START     EQU $FF1A
 SOUND_CH3_LENGTH    EQU $FF1B
  
 ; bits 6-5: audio volume 
-; \%00 is mute, \%01 is loudest,
-; \%10 is pretty quiet and \%11 is very quiet
+; %00 is mute, %01 is loudest,
+; %10 is pretty quiet and %11 is very quiet
 SOUND_CH3_VOLUME    EQU $FF1C 
 
 ; bits 7-0: lower 8 bits of the sound frequency
@@ -931,7 +931,7 @@ SOUND_CH4_ENVELOPE  EQU $FF21
 ; bits 7-4: polynomial counter, 
 ; bit 3: number of steps (15 or 7), 
 ; bits 2-0: ratio of frequency division 
-; (\%000 highest frequency, \%111  lowest)
+; (%000 highest frequency, %111  lowest)
 SOUND_CH4_POLY      EQU $FF22 
 
 ; bit 7: restart channel,
