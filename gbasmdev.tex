@@ -1038,7 +1038,7 @@ CHARMAP "<heart>", 4
 CHARMAP " ", 0
 
 AbbaCabText:
-DB "ABBA CAB <heart>"
+DB "ABBA CAB<heart>"
 \end{code}
 
 will write 1,2,2,1,0,3,1,2,4 to the ROM. Note that the |CHARMAP| commands need to appear before the text definitions in the code. Also note that it is not possible to use a single |CHARMAP| command to specify the entire alphabet; one |CHARMAP| command is needed for each character.
