@@ -247,7 +247,7 @@ The Game Boy CPU also supports bitwise operations (AND, OR, XOR), all of which o
  and B holds |%11110000|,
  then |and b| would produce |%10100000|
  in A, |or b| would produce |%11111010|
- in A, and |xor a| would produce |%01011010| 
+ in A, and |xor b| would produce |%01011010| 
  in A. Another example is |xor a| which always sets A to 0, regardless of previous values. This code is often preferred over the more readable |ld a, 0| for optimization reasons (see Chapter~\ref{optimize}).
 
 The |cpl| command computes the binary complement of A (flips all bits, so that |%11001010| becomes |%00110101|)
@@ -1472,6 +1472,7 @@ Hopefully, this book has given the reader a broad look at the topic of making Ga
 \item Version 1.0: Initial release.
 \item Version 1.1: Fixed some typos and minor mistakes, as pointed out by Luc (|u/loociano|). Thanks!
 \item Version 1.2: Fixed errors in multiplication examples, charmaps. Removed some incorrect backslashes. Fixed Sections header, which ironically wasn't a Latex section. Thanks ISSOtm!
+\item Version 1.3 (in progress): Fixed a minor error about |xor| usage. Thanks u/insta__mash!
 \end{itemize}
 
 \end{document}
