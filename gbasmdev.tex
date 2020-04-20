@@ -276,7 +276,7 @@ subtract_b_by_12:
   ; Does not affect A. Input and output on B.
   push af ; places the 16-bit number from AF onto the stack
   ld a, b
-  add 12
+  sub 12
   ld b, a
   pop af ; takes the same 16-bit number
   ; back from the stack onto AF again,
@@ -1472,7 +1472,7 @@ Hopefully, this book has given the reader a broad look at the topic of making Ga
 \item Version 1.0: Initial release.
 \item Version 1.1: Fixed some typos and minor mistakes, as pointed out by Luc (|u/loociano|). Thanks!
 \item Version 1.2: Fixed errors in multiplication examples, charmaps. Removed some incorrect backslashes. Fixed Sections header, which ironically wasn't a Latex section. Thanks ISSOtm!
-\item Version 1.3 (in progress): Fixed a minor error about |xor| usage. Thanks u/insta__mash!
+\item Version 1.3: Fixed a minor error about |xor| usage. Thanks u/insta\_\_mash! Also fixed a typo on page 17. Thanks kwdiggs!
 \end{itemize}
 
 \end{document}
