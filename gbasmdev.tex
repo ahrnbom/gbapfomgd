@@ -218,7 +218,9 @@ Probably the most common command is |ld|, which stands for "load". It copies int
 
 |ld| supports 16-bit numbers as well, allowing you to load a number onto a pair of registers. As briefly mentioned, only certain pairs of registers can be used this way: AF, BC, DE and HL. For example, |ld bc, $12AB| writes the number 4779 to the two registers B and C. This means that B would hold |$12| (which is 18 in decimal) and C would hold |$AB| (which is 171 in decimal). Basically, the first 8 bits go into the first register and the last 8 bits go into the last register. You cannot however copy data from a pair of registers to another pair, like |ld bc, de| but the stack can be used for this purpose (see below).
 
-In addition, |ld| can load from memory addresses using special syntax: |ld [de], b| would copy the data from B onto a memory position specified by the address stored on DE. A hardcoded address can be used as well, like |ld [$ff83], 255| which writes the number 255 to memory position |$FF83|. Similarly, data can be read from memory positions, for example by |ld a, [$ff83]|. 
+In addition, |ld| can load from memory addresses using special syntax: |ld [de], a| would copy the data from A onto a memory position specified by the address stored on DE. This does not work for other registers; for example, |ld [de], b| does not work. The same goes when the memory address is stored in BC. If the memory address is, however, stored in HL, you have more options for loading the data: |ld [hl], b| and |ld b, [hl]| work, and you can replace |b| with any single register.
+
+ A hardcoded address can be used as well, like |ld [$ff83], a| which writes the data stored in A to memory position |$FF83|. Similarly, data can be read from memory positions, for example by |ld a, [$ff83]|. For reading and writing into hardcoded memory addresses, the data must be written to and read from the A register, respectively.
 
 A few things you \textbf{CANNOT} do:
 \begin{code}
@@ -235,6 +237,9 @@ ld [h], 5 ; H register holds a 8-bit value,
 
 ld hl, bc ; copying 16-bit numbers from 
 ; one register pair to another is not supported
+
+ld [$1234], 255 ; Reading/writing to memory address only works 
+; to/from A, not some other value like 255
 \end{code}
 
 A final note on the |ld| operation: When reading and writing from memory addresses, it is common to read/write many numbers in a row. For such cases, special syntax allows you to increase of decrease the memory address after reading/writing, in the same CPU command, for example |ld [hl+], a| writes the content of A to whatever address HL is holding, and then increases HL by one (as a single 16-bit number), and |ld a, [hl-]| reads from the address specified in HL, stores the value in A, and finally decreases the value of HL by one. 
