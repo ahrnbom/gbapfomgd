@@ -262,7 +262,7 @@ The “swap” command swaps the top four bits with the bottom four bits of any 
 There are operations for so-called rotations and shifts. The operations |rlc| and |rrc| rotates any register to the left and right respectively, which means that each bit is moved one step left/right, looping around to the other side. For example, if the B register holds |%11001010|
 before, then after a |rlc b| it will hold |%10010101|,
 but if we ran |rrc b| instead, it would hold |%01100101|. 
-Note that special, faster commands exist for rotating the A register: |rlca| and |rrca|. These work exactly the same, except they only work on the A register, and execute twice as fast, and take up half the ROM space (see Chapter~\ref{optimize}). 
+Note that special, faster commands exist for rotating the A register: |rlca| and |rrca|. These work almost the same, except that they reset the z-flag always, execute twice as fast, and take up half the ROM space (see Chapter~\ref{optimize}). 
 
 Shifts are similar to rotations, but do not "wrap around" and instead just pad with zeros. The commonly used commands are |sla| for shifting left, and |srl| for shifting right. For example, if B holds |%11000011|
 before, then running |sla b| would result in |%10000110|
