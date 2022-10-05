@@ -63,7 +63,7 @@ The Game Boy stands out among other retro consoles as an attractive platform to 
 
 I do not know every detail about Game Boy development. I have made a complete Game Boy game, and this book is based on the experience and knowledge I gathered when making it. It is my opinion that the currently existing literature doesn't explain the topic well enough (either leaving out far too much, or by including far too many unnecessary details and assuming too much previous knowledge) that I believe that this book should be useful to many, even if there might be some errors, or some important things left out. If you have any suggestions for improvements, please contact me at \url{mail@teamlampoil.se}. 
 
-There is a project called "Awesome Gameboy Development", available at \url{https://github.com/gbdev/awesome-gbdev} which tries to gather as much resources as possible related to Game Boy development, emulators etc. If you are looking for something that you cannot find in this book, chances are you can find it there.
+There is a project called "Awesome Game Boy Development", available at \url{https://github.com/gbdev/awesome-gbdev} which tries to gather as much resources as possible related to Game Boy development, emulators etc. If you are looking for something that you cannot find in this book, chances are you can find it there.
 
 \section{Assembler vs C}
 \label{asmvsc}
@@ -83,7 +83,7 @@ It creates Game Boy ROM files that can be played either on an emulator or on rea
 
 \section{Brief description of the hardware} 
 \label{hardware}
-The Game Boy CPU is an 8-bit Sharp LR35902. It is quite similar to the z80 processor which was common in the 1980s, but it's not identical. The z80 has some more advanced instructions, so if you see z80 ASM code you want to use for your game, it might need some modifications. The Game Boy CPU runs at around 4 MHz (or 8 MHz on the Gameboy Color's high speed mode). This is incredibly slow by today's standards, and the CPU has such a limited amount of supported operations that it's quite easy to know most of them by heart, which makes it relatively easy to program for, at least in ASM.
+The Game Boy CPU is an 8-bit Sharp LR35902. It is quite similar to the z80 processor which was common in the 1980s, but it's not identical. The z80 has some more advanced instructions, so if you see z80 ASM code you want to use for your game, it might need some modifications. The Game Boy CPU runs at around 4 MHz (or 8 MHz on the Game Boy Color's high speed mode). This is incredibly slow by today's standards, and the CPU has such a limited amount of supported operations that it's quite easy to know most of them by heart, which makes it relatively easy to program for, at least in ASM.
 
 The Game Boy has 8 kB of RAM, and additional RAM may be available inside certain game carts. There's also 8 kB of dedicated VRAM for storing graphics. 
 
