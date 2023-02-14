@@ -1123,7 +1123,7 @@ in the GingerBread folder will download GBT-Player (as a subfolder called "gbt-p
 
 The scripts for assembling the example game in GingerBread has a switch called |include_gbt| which can be disabled to compile the game without GBT-Player. To do that, it is also necessary to comment out the line |USE_GBT_PLAYER EQU 1| in example.asm, so that the example game doesn't try to execute GBT-Player code that doesn't exist.
 
-To include music in a game, it is necessary to first construct .mod files for the music tracks using some tracker software. Then, the application "mod2gtb" (which is included in GBT-Player) should be used to convert the songs to .asm files. Once the .asm files for the songs are included in the compilation and linking of your ROM file,  you can tell GBT-Player which song it should play with commands like
+To include music in a game, it is necessary to first construct .mod files for the music tracks using some tracker software. Then, the application "mod2gbt" (which is included in GBT-Player) should be used to convert the songs to .asm files. Once the .asm files for the songs are included in the compilation and linking of your ROM file,  you can tell GBT-Player which song it should play with commands like
 
 \begin{code}
 ld de,your_song_data ; Pointer to the song data
