@@ -971,7 +971,7 @@ Channel 3 is especially interesting, as it allows custom wave forms to be played
 
 \section{Memory map}
 \label{memmap}
-As mentioned, the Game Boy has a single 16-bit address space, where each possible address between |$0000| and |$FFFF| pointing to something in in the hardware. The space is divided as follows:
+As mentioned, the Game Boy has a single 16-bit address space, where each possible address between |$0000| and |$FFFF| pointing to something in the hardware. The space is divided as follows:
 
 |$0000|-|$3FFF| contains the game code for bank 0 which is located in the ROM on the cartridge. It is read-only. Some parts of this range have specific purposes, like |$0040| where code execution jumps during vblank interrupts (see Chapter~\ref{weinterruptthisprogramme}), and |$0104| which is where the ROM header starts (see Chapter~\ref{header}).
 
