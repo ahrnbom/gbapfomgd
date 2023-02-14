@@ -826,7 +826,7 @@ The format of the data is quite simple. Each sprite is made up of 4 bytes: first
 \label{userinput}
 Reading values from the D-pad and buttons is actually a bit involved, as the hardware is directly controlled from the Game Boy CPU. The GingerBread library has a function called |ReadKeys| which writes a byte to the A register, where each bit represents a single input.
 
-The first (highest, leftmost) bit represents the Start button, followed by Select, B, A, down, up, left and right. For example, the value in A efter running |ReadKeys| will be |%00010010| if the player is pressing both left on the D-pad and the A button.
+The first (highest, leftmost) bit represents the Start button, followed by Select, B, A, down, up, left and right. For example, the value in A after running |ReadKeys| will be |%00010010| if the player is pressing both left on the D-pad and the A button.
 
 For example, you can do 
 
