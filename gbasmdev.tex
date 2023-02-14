@@ -1194,7 +1194,7 @@ This will make GingerBread include SGB functions. This takes up additional space
 \section{Palettes}
 There are no built-in functions in GingerBread specifically for the purpose of specifying the palettes to be used for the gameplay visuals on the SGB. Instead, it is necessary to write the SGB command binaries into the game, and send them to the SGB with the |SGBSendData| function. 
 
-The |SGBSendData| function assumes that the HL registers contains a memory address pointing to a table where the SGB command exists. Each SGB command is exactly 16 bytes long (some commands need to be split up into several commands, but |SGBSendData| does not automagically understand this, so it is then necessary to use it multiple times for each 16 bytes). The exact specification for all possible SGB commands (not limited to those used for defining the palettes) are available here: \url{https://gbdev.gg8.se/wiki/articles/SGB_Function}
+The |SGBSendData| function assumes that the HL registers contains a memory address pointing to a table where the SGB command exists. Each SGB command is exactly 16 bytes long (some commands need to be split up into several commands, but |SGBSendData| does not automagically understand this, so it is then necessary to use it multiple times for each 16 bytes). The exact specification for all possible SGB commands (not limited to those used for defining the palettes) are available here: \url{https://gbdev.io/pandocs/SGB_Functions.html}
 
 The rest of this section will focus on some of the commands that are likely to be useful for specifying the palettes to be used during gameplay.
 
